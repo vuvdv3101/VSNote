@@ -40,6 +40,12 @@ struct NoteCellView: View {
         .background(Color("bg-1"))
         .listRowSeparator(.hidden)
         .roundedCorner(8)
+        .swipeActions(edge: .trailing) {
+            Button(role: .destructive) {
+            } label: {
+                Label("Delete", systemImage: "trash")
+            }
+        }
         .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
 
     }
