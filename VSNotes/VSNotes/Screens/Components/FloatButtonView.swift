@@ -19,7 +19,7 @@ struct FloatButtonView: View {
             .frame(width: 45, height: 45)
             .padding()
             .overlay {
-                Image(systemName: "plus")
+                AppIcons.floatIcon
                     .foregroundStyle(.white)
             }
             .scaleEffect(isPressed ? 0.8 : 1.0)

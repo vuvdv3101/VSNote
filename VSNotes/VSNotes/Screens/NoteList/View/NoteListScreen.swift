@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct NoteListScreen: View {
-    @Environment(Router.self) private var router
+    @Environment(NavigationRouter.self) private var router
     @State private var viewModel: NoteListScreenViewModel = .init()
     @State private var isTextFieldFocusing: Bool = false
     @State private var navigationHeight: CGFloat = 50
@@ -60,7 +60,7 @@ struct NoteListScreen: View {
             }
 
             HStack {
-                Image(systemName: "signature")
+                AppIcons.appLogo
                     .resizable()
                     .frame(width: 24, height: 24)
 
@@ -71,7 +71,7 @@ struct NoteListScreen: View {
 
                 Spacer()
 
-                Image("search")
+                Image(systemName: "magnifyingglass")
                     .resizable()
                     .frame(width: 24, height: 24)
                     .onTapGesture {
@@ -102,6 +102,7 @@ extension NoteListScreen {
 
 #Preview {
     NoteListScreen()
+        .environment(NavigationRouter())
 }
 
 

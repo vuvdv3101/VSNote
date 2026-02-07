@@ -9,4 +9,8 @@ import SwiftUI
 @Observable
 final class NoteListScreenViewModel {
     var searchValue: String = ""
+    
+    func fetchAllNote() {
+        
+    }
 }

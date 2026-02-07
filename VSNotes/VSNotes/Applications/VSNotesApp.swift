@@ -17,7 +17,7 @@ struct VSNotesApp: App {
 }
 
 struct ContentView: View {
-    @State private var navigation: Router = NavigationRouter()
+    @State private var navigation: NavigationRouter = NavigationRouter()
     
     var body: some View {
         NavigationStack(path: $navigation.path) {
