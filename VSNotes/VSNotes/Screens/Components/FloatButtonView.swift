@@ -29,13 +29,13 @@ struct FloatButtonView: View {
     }
     
     private func action() {
-        onPress()
         withAnimation(.easeIn(duration: animationDuration)) {
             isPressed = true
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + animationDuration) {
             withAnimation(.easeOut(duration: 0.2)) {
                 isPressed = false
+                onPress()
             }
         }
     }

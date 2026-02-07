@@ -9,6 +9,7 @@ import SwiftUI
 
 struct NoteCellView: View {
     let data: NoteCellDisplayModel
+    var onDelete: () -> Void
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -21,6 +22,7 @@ struct NoteCellView: View {
                 .fontDesign(.monospaced)
                 .font(.caption)
                 .fontWeight(.thin)
+                .lineLimit(4)
             
             HStack {
                 Text(data.category)
@@ -41,12 +43,19 @@ struct NoteCellView: View {
         .listRowSeparator(.hidden)
         .roundedCorner(8)
         .swipeActions(edge: .trailing) {
-            Button(role: .destructive) {
-            } label: {
-                Label("Delete", systemImage: "trash")
-            }
+            deleteButton
         }
         .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
-
+    }
+    
+    @ViewBuilder
+    private var deleteButton: some View {
+        Button(role: .destructive) {
+            onDelete()
+        } label: {
+            Label("", systemImage: "trash")
+                .fontDesign(.monospaced)
+                .font(.caption2)
+        }
     }
 }

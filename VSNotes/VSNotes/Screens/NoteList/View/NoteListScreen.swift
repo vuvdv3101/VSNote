@@ -17,24 +17,25 @@ struct NoteListScreen: View {
         VStack(alignment: .leading ,spacing: 0) {
             navigationBar
                 .padding(.horizontal, 16)
-
+            
+            Text("List notes (\(53))")
+                .fontDesign(.monospaced)
+                .font(.callout)
+                .fontWeight(.medium)
+                .padding(.horizontal, 16)
+                .padding(.vertical, 8)
+            
             List {
-                NoteCellView(data: NoteCellDisplayModel.placeholder)
-                NoteCellView(data: NoteCellDisplayModel.placeholder)
-
-                NoteCellView(data: NoteCellDisplayModel.placeholder)
-
-                NoteCellView(data: NoteCellDisplayModel.placeholder)
-
-                NoteCellView(data: NoteCellDisplayModel.placeholder)
-
-                NoteCellView(data: NoteCellDisplayModel.placeholder)
-
+                ForEach(0..<20, id: \.self) { index in
+                    NoteCellView(data: NoteCellDisplayModel.placeholder) {
+                        
+                    }
+                }
             }
             .refreshable {
                 
             }
-            .contentMargins(.top, 8)
+            .contentMargins(.top, 0)
             .listStyle(.plain)
         }
         .simultaneousGesture(TapGesture().onEnded({ _ in

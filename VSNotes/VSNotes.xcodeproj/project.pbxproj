@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		8A68FFAF2F373673003BDAF1 /* SwiftDown in Frameworks */ = {isa = PBXBuildFile; productRef = 8A68FFAE2F373673003BDAF1 /* SwiftDown */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		B2B712782F36410700183A96 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -52,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8A68FFAF2F373673003BDAF1 /* SwiftDown in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,6 +117,7 @@
 			);
 			name = VSNotes;
 			packageProductDependencies = (
+				8A68FFAE2F373673003BDAF1 /* SwiftDown */,
 			);
 			productName = VSNotes;
 			productReference = B2B7126A2F36410500183A96 /* VSNotes.app */;
@@ -195,6 +201,9 @@
 			);
 			mainGroup = B2B712612F36410500183A96;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				8A68FFAD2F373673003BDAF1 /* XCRemoteSwiftPackageReference "SwiftDown" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = B2B7126B2F36410500183A96 /* Products */;
 			projectDirPath = "";
@@ -568,6 +577,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		8A68FFAD2F373673003BDAF1 /* XCRemoteSwiftPackageReference "SwiftDown" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/qeude/SwiftDown.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.4.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		8A68FFAE2F373673003BDAF1 /* SwiftDown */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8A68FFAD2F373673003BDAF1 /* XCRemoteSwiftPackageReference "SwiftDown" */;
+			productName = SwiftDown;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B2B712622F36410500183A96 /* Project object */;
 }

@@ -13,7 +13,7 @@ struct AppIcons {
     }()
     
     static let floatIcon: Image =  {
-        Image(systemName: "plus")
+        Image(systemName: "bubble.and.pencil")
     }()
     
     static let appLogo: Image =  {
