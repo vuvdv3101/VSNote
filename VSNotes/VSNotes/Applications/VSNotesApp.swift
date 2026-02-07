@@ -15,3 +15,18 @@ struct VSNotesApp: App {
         }
     }
 }
+
+struct ContentView: View {
+    @State private var navigation: Router = NavigationRouter()
+    
+    var body: some View {
+        NavigationStack(path: $navigation.path) {
+            NoteListScreen()
+                .navigationDestination(for: AppRoute.self, destination: { target in
+                    target
+                        .view()
+                })
+        }
+        .environment(navigation)
+    }
+}

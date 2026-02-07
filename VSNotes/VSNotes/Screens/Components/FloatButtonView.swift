@@ -11,6 +11,8 @@ struct FloatButtonView: View {
     @State private var isPressed = false
     private let animationDuration: Double = 0.1
     
+    var onPress: () -> Void
+    
     @ViewBuilder
     var body: some View {
         Circle()
@@ -27,6 +29,7 @@ struct FloatButtonView: View {
     }
     
     private func action() {
+        onPress()
         withAnimation(.easeIn(duration: animationDuration)) {
             isPressed = true
         }
