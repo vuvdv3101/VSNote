@@ -21,6 +21,7 @@ protocol Router {
 enum AppRoute: Route {
     case editor
     
+    @ViewBuilder
     func view() -> some View {
         switch self {
         case .editor:
@@ -32,7 +33,7 @@ enum AppRoute: Route {
 @Observable
 final class NavigationRouter: Router {
     var path = NavigationPath()
-
+    
     func push(_ route: any Route) {
         path.append(route)
     }

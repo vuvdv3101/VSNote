@@ -6,9 +6,12 @@
 //
 
 import SwiftUI
+import FactoryKit
+import VSNoteCore
 
 @main
 struct VSNotesApp: App {
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
@@ -16,17 +19,12 @@ struct VSNotesApp: App {
     }
 }
 
-struct ContentView: View {
-    @State private var navigation: NavigationRouter = NavigationRouter()
-    
-    var body: some View {
-        NavigationStack(path: $navigation.path) {
-            NoteListScreen()
-                .navigationDestination(for: AppRoute.self, destination: { target in
-                    target
-                        .view()
-                })
+extension Container {
+    var noteService: Factory<NoteService> {
+        Factory(self) {
+            let sql = try! SQLService()
+            let noteRepository: NoteRepository = SQLRepositoryImpl(db: sql.pool)
+            return NoteCoreServiceImpl(repository: noteRepository)
         }
-        .environment(navigation)
     }
 }

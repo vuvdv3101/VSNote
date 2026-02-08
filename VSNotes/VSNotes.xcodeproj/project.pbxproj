@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8A68FFAF2F373673003BDAF1 /* SwiftDown in Frameworks */ = {isa = PBXBuildFile; productRef = 8A68FFAE2F373673003BDAF1 /* SwiftDown */; };
+		B2B7136E2F382A1000183A96 /* VSNoteCore in Frameworks */ = {isa = PBXBuildFile; productRef = B2B7136D2F382A1000183A96 /* VSNoteCore */; };
+		B2B713D52F38863E00183A96 /* FactoryKit in Frameworks */ = {isa = PBXBuildFile; productRef = B2B713D42F38863E00183A96 /* FactoryKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,7 +57,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8A68FFAF2F373673003BDAF1 /* SwiftDown in Frameworks */,
+				B2B713D52F38863E00183A96 /* FactoryKit in Frameworks */,
+				B2B7136E2F382A1000183A96 /* VSNoteCore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,7 +119,8 @@
 			);
 			name = VSNotes;
 			packageProductDependencies = (
-				8A68FFAE2F373673003BDAF1 /* SwiftDown */,
+				B2B7136D2F382A1000183A96 /* VSNoteCore */,
+				B2B713D42F38863E00183A96 /* FactoryKit */,
 			);
 			productName = VSNotes;
 			productReference = B2B7126A2F36410500183A96 /* VSNotes.app */;
@@ -202,7 +205,8 @@
 			mainGroup = B2B712612F36410500183A96;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				8A68FFAD2F373673003BDAF1 /* XCRemoteSwiftPackageReference "SwiftDown" */,
+				B2B7136C2F382A1000183A96 /* XCLocalSwiftPackageReference "../Modules/VSNoteCore" */,
+				B2B713D32F38863E00183A96 /* XCRemoteSwiftPackageReference "Factory" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = B2B7126B2F36410500183A96 /* Products */;
@@ -578,22 +582,33 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		B2B7136C2F382A1000183A96 /* XCLocalSwiftPackageReference "../Modules/VSNoteCore" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../Modules/VSNoteCore;
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCRemoteSwiftPackageReference section */
-		8A68FFAD2F373673003BDAF1 /* XCRemoteSwiftPackageReference "SwiftDown" */ = {
+		B2B713D32F38863E00183A96 /* XCRemoteSwiftPackageReference "Factory" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/qeude/SwiftDown.git";
+			repositoryURL = "https://github.com/hmlongco/Factory";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.4.1;
+				minimumVersion = 2.5.3;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		8A68FFAE2F373673003BDAF1 /* SwiftDown */ = {
+		B2B7136D2F382A1000183A96 /* VSNoteCore */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 8A68FFAD2F373673003BDAF1 /* XCRemoteSwiftPackageReference "SwiftDown" */;
-			productName = SwiftDown;
+			productName = VSNoteCore;
+		};
+		B2B713D42F38863E00183A96 /* FactoryKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B2B713D32F38863E00183A96 /* XCRemoteSwiftPackageReference "Factory" */;
+			productName = FactoryKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

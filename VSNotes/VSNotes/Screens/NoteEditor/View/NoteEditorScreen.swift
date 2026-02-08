@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import SwiftDown
 
 struct NoteEditorScreen: View {
     @Environment(NavigationRouter.self) private var router
