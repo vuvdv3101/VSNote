@@ -6,8 +6,6 @@
 //
 
 import SwiftUI
-import FactoryKit
-import VSNoteCore
 
 @main
 struct VSNotesApp: App {
@@ -19,12 +17,3 @@ struct VSNotesApp: App {
     }
 }
 
-extension Container {
-    var noteService: Factory<NoteService> {
-        Factory(self) {
-            let sql = try! SQLService()
-            let noteRepository: NoteRepository = SQLRepositoryImpl(db: sql.pool)
-            return NoteCoreServiceImpl(repository: noteRepository)
-        }
-    }
-}

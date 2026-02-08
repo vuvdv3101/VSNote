@@ -9,6 +9,7 @@ import SwiftUI
 
 struct NoteCellView: View {
     let data: NoteCellDisplayModel
+    var ontap: () -> Void
     var onDelete: () -> Void
     
     var body: some View {
@@ -42,6 +43,9 @@ struct NoteCellView: View {
         .background(Color("bg-1"))
         .listRowSeparator(.hidden)
         .roundedCorner(8)
+        .onTapGesture {
+            ontap()
+        }
         .swipeActions(edge: .trailing) {
             deleteButton
         }

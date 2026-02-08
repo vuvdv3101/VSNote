@@ -10,7 +10,7 @@ import SwiftUI
 struct NoteListScreen: View {
     @Environment(NavigationRouter.self) private var router
     @State private var viewModel: NoteListScreenViewModel = .init()
-    @State private var isTextFieldFocusing: Bool = false
+    @State private var isFocused: Bool = false
     @State private var navigationHeight: CGFloat = 50
     
     var body: some View {
@@ -18,22 +18,19 @@ struct NoteListScreen: View {
             navigationBar
                 .padding(.horizontal, 16)
             
-            Text("List notes (\(53))")
+            Text("List notes (\(viewModel.notes.count))")
                 .fontDesign(.monospaced)
                 .font(.callout)
                 .fontWeight(.medium)
                 .padding(.horizontal, 16)
                 .padding(.vertical, 8)
             
-            List {
-                ForEach(0..<20, id: \.self) { index in
-                    NoteCellView(data: NoteCellDisplayModel.placeholder) {
-                        
-                    }
-                }
-            }
-            .refreshable {
-                
+            List(viewModel.notes, id: \.id) { note in
+                NoteCellView(data: note, ontap: {
+                    onSelectedNote(note)
+                }, onDelete: {
+                    onDeleteNote(note)
+                })
             }
             .contentMargins(.top, 0)
             .listStyle(.plain)
@@ -43,8 +40,11 @@ struct NoteListScreen: View {
         }))
         .overlay(alignment: .bottomTrailing) {
             FloatButtonView {
-                router.push(AppRoute.editor)
+                router.push(AppRoute.editor())
             }
+        }
+        .task {
+            viewModel.fetchAllNote()
         }
     }
     
@@ -54,10 +54,10 @@ struct NoteListScreen: View {
             HStack {
                 SearchTextField(
                     text: $viewModel.searchValue,
-                    focusing: $isTextFieldFocusing
+                    focusing: $isFocused
                 )
-                .opacity(isTextFieldFocusing ? 1 : 0)
-                .offset(y: isTextFieldFocusing ? 0 : 6)
+                .opacity(isFocused ? 1 : 0)
+                .offset(y: isFocused ? 0 : 6)
             }
 
             HStack {
@@ -78,12 +78,12 @@ struct NoteListScreen: View {
                     .onTapGesture {
                         withAnimation(.easeInOut(duration: 0.2)) {
                             navigationHeight = 70
-                            isTextFieldFocusing = true
+                            isFocused = true
                         }
                     }
             }
-            .opacity(isTextFieldFocusing ? 0 : 1)
-            .offset(y: isTextFieldFocusing ? -6 : 0)
+            .opacity(isFocused ? 0 : 1)
+            .offset(y: isFocused ? -6 : 0)
         }
         .frame(minHeight: navigationHeight)
         .animation(.easeIn(duration: 0.2), value: navigationHeight)
@@ -92,12 +92,20 @@ struct NoteListScreen: View {
 
 extension NoteListScreen {
     
-    func dismissSearch() {
+    private func dismissSearch() {
         withAnimation(.easeInOut(duration: 0.2)) {
             navigationHeight = 50
-            isTextFieldFocusing = false
+            isFocused = false
             viewModel.searchValue = ""
         }
+    }
+    
+    private func onSelectedNote(_ note: NoteCellDisplayModel) {
+        router.push(AppRoute.editor(note: note))
+    }
+    
+    private func onDeleteNote(_ note: NoteCellDisplayModel) {
+        viewModel.delete(note: note)
     }
 }
 

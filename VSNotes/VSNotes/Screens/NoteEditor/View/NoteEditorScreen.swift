@@ -10,7 +10,11 @@ import SwiftUI
 struct NoteEditorScreen: View {
     @Environment(NavigationRouter.self) private var router
     @FocusState private var isFocused: Bool
-    @State private var viewModel: NoteEditorViewModel = .init()
+    @State private var viewModel: NoteEditorViewModel
+    
+    init(_ note: NoteCellDisplayModel? = nil) {
+        _viewModel = State(wrappedValue: NoteEditorViewModel(note: note))
+    }
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -34,7 +38,10 @@ struct NoteEditorScreen: View {
             Spacer()
             Text("Save")
                 .fontDesign(.monospaced)
-                .foregroundStyle(Color.gray)
+                .foregroundStyle(Color.blue)
+                .onTapGesture {
+                    viewModel.save()
+                }
         }
         .frame(height: 50)
     }
@@ -42,11 +49,11 @@ struct NoteEditorScreen: View {
     @ViewBuilder
     var textEditorView: some View {
         ZStack(alignment: .topLeading) {
-            TextEditor(text: $viewModel.noteContent)
+            TextEditor(text: $viewModel.note.content)
                 .fontDesign(.monospaced)
                 .focused($isFocused)
 
-            if viewModel.noteContent.isEmpty && !isFocused {
+            if viewModel.note.content.isEmpty && !isFocused {
                 Text("Start typing…")
                     .fontDesign(.monospaced)
                     .foregroundColor(.secondary)

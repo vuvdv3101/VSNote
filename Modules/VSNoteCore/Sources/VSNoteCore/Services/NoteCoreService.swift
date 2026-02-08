@@ -11,17 +11,19 @@ public protocol NoteService {
     func getAll() async throws -> [Note]
     func search(keyword: String) async throws  -> [Note]
     func save(_ note: Note) async throws
-    func delete(_ note: Note) async throws
+    func delete(_ noteId: Int64) async throws
     func upddate(_ note: Note) async throws
     func syncToCloud() async throws
 }
 
-public class NoteCoreServiceImpl: NoteService {
+
+public class NoteCoreService: NoteService {
     
     private let repository: NoteRepository
     
-    public init(repository: NoteRepository) {
-        self.repository = repository
+    public init() {
+        let db = try! SQLService()
+        self.repository = SQLRepository(db: db.pool)
     }
     
     public func getAll() async throws -> [Note] {
@@ -34,7 +36,7 @@ public class NoteCoreServiceImpl: NoteService {
             return allNotes
         }
         
-        return try await repository.search(keyword: keyword)
+        return try await repository.searchFullText(keyword)
         
     }
     
@@ -42,8 +44,8 @@ public class NoteCoreServiceImpl: NoteService {
         try await repository.save(note)
     }
     
-    public func delete(_ note: Note) async throws {
-        try await repository.delete(note)
+    public func delete(_ noteId: Int64) async throws {
+        try await repository.delete(noteId)
 
     }
     
@@ -54,5 +56,5 @@ public class NoteCoreServiceImpl: NoteService {
     
     public func syncToCloud() async throws {
         
-    }
+    }    
 }

@@ -19,13 +19,13 @@ protocol Router {
 }
 
 enum AppRoute: Route {
-    case editor
+    case editor(note: NoteCellDisplayModel? = nil)
     
     @ViewBuilder
     func view() -> some View {
         switch self {
-        case .editor:
-            NoteEditorScreen()
+        case .editor(let data):
+            NoteEditorScreen(data)
         }
     }
 }
