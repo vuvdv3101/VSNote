@@ -8,8 +8,12 @@
 import GRDB
 import Foundation
 
-final class SQLService {
-    let pool: DatabasePool
+public protocol DatabaseProviding {
+    var pool: DatabasePool { get }
+}
+
+public final class GRDBDatabaseProvider: DatabaseProviding {
+    public let pool: DatabasePool
     
     public init() throws {
         debugPrint("[SQL CORE] setup db service....")
@@ -28,7 +32,12 @@ final class SQLService {
         debugPrint("[SQL CORE] setup database service DONE....")
     }
     
-    private func createDatabaseTable() throws {
+    public init(pool: DatabasePool) throws {
+        self.pool = pool
+        try createDatabaseTable()
+    }
+    
+    public func createDatabaseTable() throws {
         debugPrint("[SQL CORE] setup database table....")
             try pool.write { db in
                 try db.create(table: "notes", ifNotExists: true) { t in

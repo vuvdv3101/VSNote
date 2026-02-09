@@ -38,11 +38,7 @@ final class NoteListScreenViewModel {
     }
     
     func fetchAllNote() {
-        Task {
-            let data = try await noteService.getAll()
-            notes = data.map({ NoteCellDisplayModel.fromNote($0) })
-            debugPrint(data)
-        }
+        search("")
     }
     
     func delete(note: NoteCellDisplayModel) {

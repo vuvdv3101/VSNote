@@ -7,23 +7,12 @@
 
 import Combine
 
-public protocol NoteService {
-    func getAll() async throws -> [Note]
-    func search(keyword: String) async throws  -> [Note]
-    func save(_ note: Note) async throws
-    func delete(_ noteId: Int64) async throws
-    func upddate(_ note: Note) async throws
-    func syncToCloud() async throws
-}
-
-
 public class NoteCoreService: NoteService {
     
     private let repository: NoteRepository
     
-    public init() {
-        let db = try! SQLService()
-        self.repository = SQLRepository(db: db.pool)
+    public init(repository: NoteRepository) {
+        self.repository = repository
     }
     
     public func getAll() async throws -> [Note] {

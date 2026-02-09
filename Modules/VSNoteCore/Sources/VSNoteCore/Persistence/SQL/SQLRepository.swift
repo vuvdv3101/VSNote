@@ -8,45 +8,45 @@
 import Foundation
 import GRDB
 
-final class SQLRepository: NoteRepository {
-    private let db: DatabasePool
+public final class SQLRepository: NoteRepository {
+    private let provider: DatabaseProviding
     
-    init(db: DatabasePool) {
-        self.db = db
+    public init(provider: DatabaseProviding) {
+        self.provider = provider
     }
     
-    func getAll() async throws -> [Note] {
-        try await db.read { db in
+    public func getAll() async throws -> [Note] {
+        try await provider.pool.read { db in
             try Note.order(Column("updatedAt").desc).fetchAll(db)
         }
     }
     
-    func save(_ note: Note) async throws {
-        try await db.write { db in
+    public func save(_ note: Note) async throws {
+        try await provider.pool.write { db in
             var note = note
             note.updatedAt = Date().timeIntervalSince1970
             try note.save(db)
         }
     }
     
-    func delete(_ noteId: Int64) async throws {
-        return try await db.write { db in
+    public func delete(_ noteId: Int64) async throws {
+        return try await provider.pool.write { db in
             try Note.deleteOne(db, key: noteId)
         }
     }
     
-    func update(_ note: Note) async throws {
-        try await db.write { db in
+    public func update(_ note: Note) async throws {
+        try await provider.pool.write { db in
             var updatedNote = note
             updatedNote.updatedAt = Date().timeIntervalSince1970
             try updatedNote.update(db)
         }
     }
     
-    func search(keyword: String) async throws -> [Note] {
+    public func search(keyword: String) async throws -> [Note] {
         let searchQuery = keyword.split(separator: " ").joined(separator: " AND ")
         
-        return try await db.read { db in
+        return try await provider.pool.read { db in
             let sql = """
                 SELECT notes.* FROM note
                 JOIN note_fts ON note.id = note_fts.rowid
@@ -57,14 +57,14 @@ final class SQLRepository: NoteRepository {
         }
     }
     
-    func searchFullText(_ query: String) async throws -> [Note] {
+    public func searchFullText(_ query: String) async throws -> [Note] {
         print("🔍 searchFullText: '\(query)'")
         
         guard !query.isEmpty else {
             return try await getAll()
         }
         
-        return try await db.read { db in
+        return try await provider.pool.read { db in
             let searchQuery = query
                 .lowercased()
                 .trimmingCharacters(in: .whitespacesAndNewlines)
@@ -85,8 +85,8 @@ final class SQLRepository: NoteRepository {
     }
     
     
-    func getSearchSuggestions(_ prefix: String) async throws -> [String] {
-        try await db.read { db in
+    public func getSearchSuggestions(_ prefix: String) async throws -> [String] {
+        try await provider.pool.read { db in
             let sql = """
                 SELECT DISTINCT title FROM notes_fts
                 WHERE title LIKE ?
@@ -96,7 +96,7 @@ final class SQLRepository: NoteRepository {
         }
     }
     
-    func syncToCloud() async throws {
+    public func syncToCloud() async throws {
         // TODO: Implement cloud sync
         print("Cloud sync not implemented yet")
     }
