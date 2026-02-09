@@ -16,13 +16,13 @@ public final class SQLRepository: NoteRepository {
     }
     
     public func getAll() async throws -> [Note] {
-        try await provider.pool.read { db in
+        try provider.pool.read { db in
             try Note.order(Column("updatedAt").desc).fetchAll(db)
         }
     }
     
     public func save(_ note: Note) async throws {
-        try await provider.pool.write { db in
+        try provider.pool.write { db in
             var note = note
             note.updatedAt = Date().timeIntervalSince1970
             try note.save(db)
@@ -30,13 +30,13 @@ public final class SQLRepository: NoteRepository {
     }
     
     public func delete(_ noteId: Int64) async throws {
-        return try await provider.pool.write { db in
+        return try provider.pool.write { db in
             try Note.deleteOne(db, key: noteId)
         }
     }
     
     public func update(_ note: Note) async throws {
-        try await provider.pool.write { db in
+        try provider.pool.write { db in
             var updatedNote = note
             updatedNote.updatedAt = Date().timeIntervalSince1970
             try updatedNote.update(db)
@@ -46,7 +46,7 @@ public final class SQLRepository: NoteRepository {
     public func search(keyword: String) async throws -> [Note] {
         let searchQuery = keyword.split(separator: " ").joined(separator: " AND ")
         
-        return try await provider.pool.read { db in
+        return try provider.pool.read { db in
             let sql = """
                 SELECT notes.* FROM note
                 JOIN note_fts ON note.id = note_fts.rowid
@@ -64,7 +64,7 @@ public final class SQLRepository: NoteRepository {
             return try await getAll()
         }
         
-        return try await provider.pool.read { db in
+        return try provider.pool.read { db in
             let searchQuery = query
                 .lowercased()
                 .trimmingCharacters(in: .whitespacesAndNewlines)
@@ -86,7 +86,7 @@ public final class SQLRepository: NoteRepository {
     
     
     public func getSearchSuggestions(_ prefix: String) async throws -> [String] {
-        try await provider.pool.read { db in
+        try provider.pool.read { db in
             let sql = """
                 SELECT DISTINCT title FROM notes_fts
                 WHERE title LIKE ?
