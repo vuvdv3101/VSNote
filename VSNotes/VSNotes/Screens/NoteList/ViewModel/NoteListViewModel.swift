@@ -44,7 +44,7 @@ final class NoteListScreenViewModel {
     func delete(note: NoteCellDisplayModel) {
         guard let noteId = note.id else { return }
         Task {
-            try! await noteService.delete(noteId)
+            try! await noteService?.delete(noteId)
             fetchAllNote()
         }
     }
@@ -52,8 +52,8 @@ final class NoteListScreenViewModel {
     func search(_ keyword: String) {
         Task {
             do {
-                let data = try await noteService.search(keyword: keyword)
-                notes = data.map({ NoteCellDisplayModel.fromNote($0) })
+                let data = try await noteService?.search(keyword: keyword)
+                notes = data?.map({ NoteCellDisplayModel.fromNote($0) }) ?? []
             } catch let e {
                 debugPrint("Search error: \(e)")
             }

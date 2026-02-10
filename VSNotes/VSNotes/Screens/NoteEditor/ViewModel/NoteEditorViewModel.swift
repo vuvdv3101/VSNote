@@ -29,7 +29,7 @@ final class NoteEditorViewModel {
                 updatedAt: now
             )
             do {
-                try await noteService.save(noteEntity)
+                try await noteService?.save(noteEntity)
                 debugPrint("Save success")
             } catch let e {
                 debugPrint("Save error: \(e)")

@@ -15,25 +15,47 @@ struct SQLDatabaseProviderTest {
     // Test db init with notes and FTS table
     @Test func test_database_initialization() async throws {
         
-        let dbPool = try createPool()
-        let db = try GRDBDatabaseProvider(pool: dbPool.pool)
+        let dbName = "test_\(UUID().uuidString).sqlite"
+        let dbURL = try SQLiteURLBuilder(folderURL: FileManager.default.temporaryDirectory).getDbURL(name: dbName)
+        let dbProvider = try GRDBDatabaseProvider(url: dbURL)
 
-        try await db.pool.read { db in
+        try await dbProvider.pool.read { db in
             let isNoteTableExist = try db.tableExists("notes")
             let isNoteFTSTableExist = try db.tableExists("notes_fts")
-            try? FileManager.default.removeItem(at: dbPool.url)
             #expect(isNoteTableExist)
             #expect(isNoteFTSTableExist)
             
         }
+        
+        try? FileManager.default.removeItem(at: dbURL)
+
+    }
+    
+    @Test func test_database_default_initialization() async throws {
+        
+        let dbName = "test_\(UUID().uuidString).sqlite"
+        let dbURL = try SQLiteURLBuilder(folderURL: FileManager.default.temporaryDirectory).getDbURL(name: dbName)
+        let dbProvider = try GRDBDatabaseProvider(url: dbURL)
+
+        try await dbProvider.pool.read { db in
+            let isNoteTableExist = try db.tableExists("notes")
+            let isNoteFTSTableExist = try db.tableExists("notes_fts")
+            #expect(isNoteTableExist)
+            #expect(isNoteFTSTableExist)
+
+        }
+        
+        try? FileManager.default.removeItem(at: dbURL)
+
     }
     
     // Test main table "note" schema is correct
     @Test func test_notes_table_schema() async throws {
-        let dbPool = try createPool()
-        let provider = try GRDBDatabaseProvider(pool: dbPool.pool)
+        let dbName = "test_\(UUID().uuidString).sqlite"
+        let dbURL = try SQLiteURLBuilder(folderURL: FileManager.default.temporaryDirectory).getDbURL(name: dbName)
+        let dbProvider = try GRDBDatabaseProvider(url: dbURL)
         
-        try await provider.pool.read { db in
+        try await dbProvider.pool.read { db in
             let columns = try db.columns(in: "notes")
             
             let columnNames = columns.map { $0.name }
@@ -67,33 +89,31 @@ struct SQLDatabaseProviderTest {
             #expect(columnFTSNames.contains("title"))
             #expect(columnFTSNames.contains("content"))
         }
+        
+        try? FileManager.default.removeItem(at: dbURL)
+
     }
     
     @Test func test_notes_fts_table_schema() async throws {
-        let dbPool = try createPool()
-        let provider = try GRDBDatabaseProvider(pool: dbPool.pool)
+        let dbName = "test_\(UUID().uuidString).sqlite"
+        let dbURL = try SQLiteURLBuilder(folderURL: FileManager.default.temporaryDirectory).getDbURL(name: dbName)
+        let dbProvider = try GRDBDatabaseProvider(url: dbURL)
         
-        try await provider.pool.read { db in
+        try await dbProvider.pool.read { db in
             let columns = try db.columns(in: "notes_fts")
             
             let columnNames = columns.map { $0.name }
             #expect(columnNames.contains("title"))
             #expect(columnNames.contains("content"))
-        }
-    }
-}
+            
 
-// MARK: - Support function
-extension SQLDatabaseProviderTest {
-    private func createDatabaseURL() -> URL {
-        let tempDir = FileManager.default.temporaryDirectory
-        let dbURL = tempDir.appendingPathComponent("test_\(UUID().uuidString).sqlite")
-        return dbURL
+        }
+        
+        try? FileManager.default.removeItem(at: dbURL)
+
     }
     
-    private func createPool() throws -> (pool: DatabasePool,url: URL) {
-        let dbURL = createDatabaseURL()
-        let config = Configuration()
-        return try (DatabasePool(path: dbURL.path(), configuration: config), dbURL)
+    @Test func test_enity_correct_tableName() async throws {
+        #expect(Note.databaseTableName == "notes")
     }
 }

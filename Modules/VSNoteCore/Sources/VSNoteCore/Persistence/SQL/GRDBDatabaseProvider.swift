@@ -12,29 +12,32 @@ public protocol DatabaseProviding {
     var pool: DatabasePool { get }
 }
 
-public final class GRDBDatabaseProvider: DatabaseProviding {
-    public let pool: DatabasePool
-    
-    public init() throws {
-        debugPrint("[SQL CORE] setup db service....")
+public struct SQLiteURLBuilder {
+    let folderURL: URL
+    public init (folderURL: URL) {
+        self.folderURL = folderURL
+    }
+    public func getDbURL(name: String) throws -> URL {
         let fileManager = FileManager.default
-        let folderURL = try fileManager
-            .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+        let folderURL = folderURL
             .appendingPathComponent("VSNote", isDirectory: true)
         
         try fileManager.createDirectory(at: folderURL, withIntermediateDirectories: true)
         
-        let databaseURL = folderURL.appendingPathComponent("notes.sqlite")
-        debugPrint("[SQL CORE] created url: \(databaseURL)")
-        self.pool = try DatabasePool(path: databaseURL.path)
+        let databaseURL = folderURL.appendingPathComponent(name)
+        return databaseURL
+    }
+}
+
+public final class GRDBDatabaseProvider: DatabaseProviding {
+    public let pool: DatabasePool
+    public init(url: URL) throws {
+        debugPrint("[SQL CORE] setup db service....")
+        debugPrint("[SQL CORE] created url: \(url)")
+        self.pool = try DatabasePool(path: url.path)
         
         try createDatabaseTable()
         debugPrint("[SQL CORE] setup database service DONE....")
-    }
-    
-    public init(pool: DatabasePool) throws {
-        self.pool = pool
-        try createDatabaseTable()
     }
     
     public func createDatabaseTable() throws {
