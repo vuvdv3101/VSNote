@@ -12,18 +12,18 @@ public protocol NoteEntity: Equatable, Sendable {
     var id: Int64? { get }
     var title: String { get }
     var content: String { get }
-    var createdAt: Double { get }
-    var updatedAt: Double { get }
+    var createdAt: Double? { get }
+    var updatedAt: Double? { get }
 }
 
 public struct Note: NoteEntity {
     public var id: Int64?
     public var title: String
     public var content: String
-    public var createdAt: Double
-    public var updatedAt: Double
+    public var createdAt: Double?
+    public var updatedAt: Double?
     
-    public init(id: Int64? = nil, title: String, content: String, createdAt: Double, updatedAt: Double) {
+    public init(id: Int64? = nil, title: String, content: String, createdAt: Double? = nil, updatedAt: Double? = nil) {
         self.id = id
         self.title = title
         self.content = content
@@ -43,6 +43,10 @@ extension Note: Codable, FetchableRecord, MutablePersistableRecord {
     
     mutating public func didInsert(_ inserted: InsertionSuccess) {
         id = inserted.rowID
+    }
+    
+    public func didUpdate(_ updated: PersistenceSuccess) {
+        
     }
 }
 

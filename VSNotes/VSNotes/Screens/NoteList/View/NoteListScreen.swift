@@ -18,22 +18,28 @@ struct NoteListScreen: View {
             navigationBar
                 .padding(.horizontal, 16)
             
-            Text("List notes (\(viewModel.notes.count))")
+            Text("\(viewModel.searchValue.isEmpty ? "List notes" : "Search results") (\(viewModel.notes.count))")
                 .fontDesign(.monospaced)
-                .font(.callout)
+                .font(.footnote)
                 .fontWeight(.medium)
                 .padding(.horizontal, 16)
                 .padding(.vertical, 8)
+                .animation(.smooth(duration: 0.1), value: viewModel.notes.count)
             
-            List(viewModel.notes, id: \.id) { note in
-                NoteCellView(data: note, ontap: {
-                    onSelectedNote(note)
-                }, onDelete: {
-                    onDeleteNote(note)
-                })
+            if viewModel.notes.isEmpty {
+                emptyView
+            } else {
+                List(viewModel.notes, id: \.id) { note in
+                    NoteCellView(data: note, ontap: {
+                        onSelectedNote(note)
+                    }, onDelete: {
+                        onDeleteNote(note)
+                    })
+                }
+                .contentMargins(.top, 0)
+                .listStyle(.plain)
             }
-            .contentMargins(.top, 0)
-            .listStyle(.plain)
+            
         }
         .simultaneousGesture(TapGesture().onEnded({ _ in
             dismissSearch()
@@ -87,6 +93,28 @@ struct NoteListScreen: View {
         }
         .frame(minHeight: navigationHeight)
         .animation(.easeIn(duration: 0.2), value: navigationHeight)
+    }
+    
+    @ViewBuilder
+    var emptyView: some View {
+        VStack(alignment: .center) {
+            Spacer()
+            Text("No notes found")
+                .font(.headline)
+                .foregroundColor(.secondary)
+            if viewModel.searchValue.isEmpty {
+                Text("Create your first note")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            } else {
+                Text("Please try with different words")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
+            
+            Spacer()
+        }
+        .frame(maxWidth: .infinity)
     }
 }
 

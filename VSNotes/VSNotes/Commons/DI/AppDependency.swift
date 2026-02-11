@@ -10,7 +10,7 @@ import VSNoteCore
 import Foundation
 
 extension Container {
-    var noteService: Factory<NoteService?> {
+    var noteService: Factory<NoteService> {
         Factory(self) {
             do {
                 let dbURL = try SQLiteURLBuilder(folderURL: FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)).getDbURL(name: "notes.sqlite")
@@ -18,8 +18,7 @@ extension Container {
                 let repository = SQLRepository(provider: dbProvider)
                 return NoteCoreService(repository: repository)
             } catch let e {
-                debugPrint("[DI] error when inject dependencies: \(e)")
-                return nil
+                fatalError("[DI] error when inject dependencies: \(e)")
             }
             
         }

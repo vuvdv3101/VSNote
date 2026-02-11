@@ -38,7 +38,7 @@ public class NoteCoreService: NoteService {
 
     }
     
-    public func upddate(_ note: Note) async throws {
+    public func update(_ note: Note) async throws {
         try await repository.update(note)
 
     }

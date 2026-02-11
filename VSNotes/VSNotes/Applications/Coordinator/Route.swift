@@ -5,6 +5,7 @@
 //  Created by ECO0611-VUVD on 7/2/26.
 //
 import SwiftUI
+import FactoryKit
 
 protocol Route: Hashable {
     associatedtype Child: View
@@ -25,7 +26,9 @@ enum AppRoute: Route {
     func view() -> some View {
         switch self {
         case .editor(let data):
-            NoteEditorScreen(data)
+            let noteService = Container.shared.noteService.resolve()
+            let viewModel = NoteEditorViewModel(note: data, noteService: noteService)
+            NoteEditorScreen(viewModel)
         }
     }
 }

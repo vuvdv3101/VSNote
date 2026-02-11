@@ -6,14 +6,15 @@
 //
 
 import SwiftUI
+import FactoryKit
+import VSNoteCore
 
 struct NoteEditorScreen: View {
     @Environment(NavigationRouter.self) private var router
     @FocusState private var isFocused: Bool
     @State private var viewModel: NoteEditorViewModel
-    
-    init(_ note: NoteCellDisplayModel? = nil) {
-        _viewModel = State(wrappedValue: NoteEditorViewModel(note: note))
+    init(_ viewModel: NoteEditorViewModel) {
+        _viewModel = State(wrappedValue: viewModel)
     }
     
     var body: some View {
@@ -40,7 +41,10 @@ struct NoteEditorScreen: View {
                 .fontDesign(.monospaced)
                 .foregroundStyle(Color.blue)
                 .onTapGesture {
-                    viewModel.save()
+                    Task {
+                        await viewModel.save().value
+                        router.pop()
+                    }
                 }
         }
         .frame(height: 50)
@@ -53,10 +57,10 @@ struct NoteEditorScreen: View {
                 .fontDesign(.monospaced)
                 .focused($isFocused)
 
-            if viewModel.note.content.isEmpty && !isFocused {
+            if viewModel.note.content.isEmpty {
                 Text("Start typing…")
                     .fontDesign(.monospaced)
-                    .foregroundColor(.secondary)
+                    .foregroundStyle(.gray)
                     .padding(.top, 8)
                     .padding(.leading, 5)
                     .allowsHitTesting(false)
@@ -66,6 +70,12 @@ struct NoteEditorScreen: View {
 }
 
 #Preview {
-    NoteEditorScreen()
+    let _ = Container.shared.noteService.register {
+        Mock.mockService
+    }
+
+    let viewModel = NoteEditorViewModel(note: nil, noteService: Container.shared.noteService.resolve())
+    NoteEditorScreen(viewModel)
         .environment(NavigationRouter())
 }
+

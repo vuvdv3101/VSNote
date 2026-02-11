@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B20F2B292F3D06B400D8B560 /* Factory in Frameworks */ = {isa = PBXBuildFile; productRef = B20F2B282F3D06B400D8B560 /* Factory */; };
+		B20F2B2B2F3D06B400D8B560 /* FactoryKit in Frameworks */ = {isa = PBXBuildFile; productRef = B20F2B2A2F3D06B400D8B560 /* FactoryKit */; };
+		B20F2B2D2F3D06B400D8B560 /* FactoryTesting in Frameworks */ = {isa = PBXBuildFile; productRef = B20F2B2C2F3D06B400D8B560 /* FactoryTesting */; };
 		B2B7136E2F382A1000183A96 /* VSNoteCore in Frameworks */ = {isa = PBXBuildFile; productRef = B2B7136D2F382A1000183A96 /* VSNoteCore */; };
-		B2B713D52F38863E00183A96 /* FactoryKit in Frameworks */ = {isa = PBXBuildFile; productRef = B2B713D42F38863E00183A96 /* FactoryKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,7 +59,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B2B713D52F38863E00183A96 /* FactoryKit in Frameworks */,
+				B20F2B2B2F3D06B400D8B560 /* FactoryKit in Frameworks */,
 				B2B7136E2F382A1000183A96 /* VSNoteCore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -66,6 +68,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B20F2B2D2F3D06B400D8B560 /* FactoryTesting in Frameworks */,
+				B20F2B292F3D06B400D8B560 /* Factory in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -120,7 +124,7 @@
 			name = VSNotes;
 			packageProductDependencies = (
 				B2B7136D2F382A1000183A96 /* VSNoteCore */,
-				B2B713D42F38863E00183A96 /* FactoryKit */,
+				B20F2B2A2F3D06B400D8B560 /* FactoryKit */,
 			);
 			productName = VSNotes;
 			productReference = B2B7126A2F36410500183A96 /* VSNotes.app */;
@@ -144,6 +148,8 @@
 			);
 			name = VSNotesTests;
 			packageProductDependencies = (
+				B20F2B282F3D06B400D8B560 /* Factory */,
+				B20F2B2C2F3D06B400D8B560 /* FactoryTesting */,
 			);
 			productName = VSNotesTests;
 			productReference = B2B712772F36410700183A96 /* VSNotesTests.xctest */;
@@ -206,7 +212,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				B2B7136C2F382A1000183A96 /* XCLocalSwiftPackageReference "../Modules/VSNoteCore" */,
-				B2B713D32F38863E00183A96 /* XCRemoteSwiftPackageReference "Factory" */,
+				B20F2B272F3D06B400D8B560 /* XCRemoteSwiftPackageReference "Factory" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = B2B7126B2F36410500183A96 /* Products */;
@@ -590,7 +596,7 @@
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		B2B713D32F38863E00183A96 /* XCRemoteSwiftPackageReference "Factory" */ = {
+		B20F2B272F3D06B400D8B560 /* XCRemoteSwiftPackageReference "Factory" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/hmlongco/Factory";
 			requirement = {
@@ -601,14 +607,24 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		B20F2B282F3D06B400D8B560 /* Factory */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B20F2B272F3D06B400D8B560 /* XCRemoteSwiftPackageReference "Factory" */;
+			productName = Factory;
+		};
+		B20F2B2A2F3D06B400D8B560 /* FactoryKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B20F2B272F3D06B400D8B560 /* XCRemoteSwiftPackageReference "Factory" */;
+			productName = FactoryKit;
+		};
+		B20F2B2C2F3D06B400D8B560 /* FactoryTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B20F2B272F3D06B400D8B560 /* XCRemoteSwiftPackageReference "Factory" */;
+			productName = FactoryTesting;
+		};
 		B2B7136D2F382A1000183A96 /* VSNoteCore */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = VSNoteCore;
-		};
-		B2B713D42F38863E00183A96 /* FactoryKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B2B713D32F38863E00183A96 /* XCRemoteSwiftPackageReference "Factory" */;
-			productName = FactoryKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -11,6 +11,6 @@ public protocol NoteService {
     func search(keyword: String) async throws  -> [Note]
     func save(_ note: Note) async throws
     func delete(_ noteId: Int64) async throws
-    func upddate(_ note: Note) async throws
+    func update(_ note: Note) async throws
     func syncToCloud() async throws
 }

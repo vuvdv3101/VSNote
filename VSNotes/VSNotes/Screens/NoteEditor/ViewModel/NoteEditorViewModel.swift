@@ -11,15 +11,24 @@ import VSNoteCore
 
 @Observable
 final class NoteEditorViewModel {
-    @ObservationIgnored @Injected(\.noteService) private var noteService
     var note: NoteCellDisplayModel
+    let noteService: NoteService
     
-    init(note: NoteCellDisplayModel?) {
-        self.note = note ?? .init(id: 0, title: "", content: "", time: "", category: "")
+    init(note: NoteCellDisplayModel?, noteService: NoteService) {
+        self.noteService = noteService
+        self.note = note ?? .init(id: nil, title: "", content: "", time: "", category: "")
     }
     
-    func save() {
-        Task {
+    @discardableResult
+    func save() -> Task<Void, Never> {
+        guard let noteid = note.id else {
+            return createNote()
+        }
+        return updateNote(id: noteid)
+    }
+    
+    private func createNote() -> Task<Void, Never> {
+        return Task {
             let now = Date().timeIntervalSince1970
             let noteEntity = Note(
                 id: nil,
@@ -29,8 +38,20 @@ final class NoteEditorViewModel {
                 updatedAt: now
             )
             do {
-                try await noteService?.save(noteEntity)
+                try await noteService.save(noteEntity)
                 debugPrint("Save success")
+            } catch let e {
+                debugPrint("Save error: \(e)")
+            }
+        }
+    }
+    
+    private func updateNote(id: Int64) -> Task<Void, Never> {
+        return Task {
+            
+            do {
+                try await noteService.update(note.toNoteEntity())
+                debugPrint("Update success")
             } catch let e {
                 debugPrint("Save error: \(e)")
             }

@@ -13,13 +13,9 @@ struct NoteCellView: View {
     var onDelete: () -> Void
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            Text(data.title)
-                .fontDesign(.monospaced)
-                .font(.callout)
-                .fontWeight(.medium)
+        VStack(alignment: .leading, spacing: 8) {
             
-            Text(data.content)
+                Text(data.content)
                 .fontDesign(.monospaced)
                 .font(.caption)
                 .fontWeight(.thin)
@@ -39,8 +35,9 @@ struct NoteCellView: View {
                     .foregroundStyle(.secondary)
             }
         }
-        .padding()
-        .background(Color("bg-1"))
+        .padding(.vertical, 10)
+        .padding(.horizontal, 16)
+        .background(getBackgroundColor())
         .listRowSeparator(.hidden)
         .roundedCorner(8)
         .onTapGesture {
@@ -62,4 +59,13 @@ struct NoteCellView: View {
                 .font(.caption2)
         }
     }
+    
+    private func getBackgroundColor() -> Color {
+        let id = (data.id ?? 0) % 4
+        return Color("bg-\(id)")
+    }
+}
+
+#Preview {
+    NoteCellView(data: .init(id: 0, title: "", content: "The note content displayed here", time: "12 Feb 2026", category: "Money|Travel"), ontap: {}, onDelete: {})
 }
