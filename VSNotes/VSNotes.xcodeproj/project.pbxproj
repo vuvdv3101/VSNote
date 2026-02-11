@@ -31,6 +31,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B20F2B2F2F3D16B500D8B560 /* Simulator Screen Recording - iPhone 16 Pro - 2026-02-12 at 02.56.51.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Simulator Screen Recording - iPhone 16 Pro - 2026-02-12 at 02.56.51.mp4"; sourceTree = "<group>"; };
 		B2B7126A2F36410500183A96 /* VSNotes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VSNotes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2B712772F36410700183A96 /* VSNotesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VSNotesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2B712812F36410700183A96 /* VSNotesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VSNotesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -83,9 +84,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B20F2B2E2F3D169400D8B560 /* Video */ = {
+			isa = PBXGroup;
+			children = (
+				B20F2B2F2F3D16B500D8B560 /* Simulator Screen Recording - iPhone 16 Pro - 2026-02-12 at 02.56.51.mp4 */,
+			);
+			path = Video;
+			sourceTree = "<group>";
+		};
 		B2B712612F36410500183A96 = {
 			isa = PBXGroup;
 			children = (
+				B20F2B2E2F3D169400D8B560 /* Video */,
 				B2B7126C2F36410500183A96 /* VSNotes */,
 				B2B7127A2F36410700183A96 /* VSNotesTests */,
 				B2B712842F36410700183A96 /* VSNotesUITests */,
