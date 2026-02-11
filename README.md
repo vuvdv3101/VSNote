@@ -15,6 +15,23 @@ VSNote is a simple yet powerful note-taking app designed for iOS 17+
 - **Well Tested**: Comprehensive unit and integration tests
 - **Modular Architecture**: Clean separation of concerns with VSNoteCore module
 
+## Challenges & Solutions
+1. Full-Text Search with FTS5
+
+Challenges:
+
+Keeping data in sync between the main table (notes) and the FTS table (notes_fts)
+
+Optimizing search performance for large datasets
+
+Solutions:
+
+- Used database triggers to automatically synchronize INSERT / UPDATE / DELETE operations
+
+- Applied the BM25 ranking algorithm to sort results by relevance
+
+- Added indexes on frequently queried columns (createdAt, updatedAt) to improve performance
+
 ## Architecture
 
 VSNote follows the MVVM (Model-View-ViewModel) pattern with a modular architecture
