@@ -17,17 +17,7 @@ VSNote is a simple yet powerful note-taking app designed for iOS 17+
 
 ## Architecture
 
-VSNote follows the MVVM (Model-View-ViewModel) pattern with a modular architecture:
-
-```
-VSNote (Main App)
-├── VSNoteCore (Module)
-│   ├── Entities (Note data models)
-│   ├── Persistence (Repository pattern)
-│   └── Services (Business logic)
-├── Screens (SwiftUI Views & ViewModels)
-└── Commons (Shared utilities)
-```
+VSNote follows the MVVM (Model-View-ViewModel) pattern with a modular architecture
 
 ### Technology Stack
 
